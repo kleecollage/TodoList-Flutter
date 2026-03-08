@@ -21,7 +21,7 @@ class TaskListScreen extends StatelessWidget {
             onTap: (() {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TaskFormScreen()),
+                MaterialPageRoute(builder: (context) => TaskFormScreen(task: task,)),
               );
             }),
             child: TaskItem(task: task),

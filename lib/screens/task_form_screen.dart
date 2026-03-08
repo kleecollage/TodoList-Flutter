@@ -13,8 +13,8 @@ class TaskFormScreen extends StatefulWidget {
 
 class _TaskFormScreenState extends State<TaskFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  late String _title;
-  late String _category;
+  late TextEditingController _titleController;
+  late TextEditingController _categoryController;
   bool _isEditing = false;
 
   @override
@@ -23,11 +23,11 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
 
     if (widget.task != null) {
       _isEditing = true;
-      _title = widget.task!.title;
-      _category = widget.task!.category;
+      _titleController = TextEditingController(text: widget.task!.title);
+      _categoryController = TextEditingController(text: widget.task!.category);
     } else {
-      _title = '';
-      _category = '';
+      _titleController = _titleController = TextEditingController();
+      _categoryController = _categoryController = TextEditingController();
     }
   }
 
@@ -45,7 +45,7 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
             children: [
               // ##########   TITLE INPUT   ########## //
               TextFormField(
-                initialValue: _title,
+                controller: _titleController,
                 decoration: const InputDecoration(labelText: 'Title'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -53,12 +53,11 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                   }
                   return null;
                 },
-                onSaved: (newValue) => _title = newValue!,
               ),
               // ##########   CATEGORY INPUT   ########## //
               const SizedBox(height: 20),
               TextFormField(
-                initialValue: _category,
+                controller: _categoryController,
                 decoration: const InputDecoration(labelText: 'Category'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -66,7 +65,6 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                   }
                   return null;
                 },
-                onSaved: (newValue) => _category = newValue!,
               ),
               // ##########   SUBMIT   ########## //
               const SizedBox(height: 20),
@@ -75,9 +73,16 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     if (_isEditing) {
-                      taskProvider.editTask(widget.task!.id, _title, _category);
+                      taskProvider.editTask(
+                        widget.task!.id,
+                        _titleController.text,
+                        _categoryController.text,
+                      );
                     } else {
-                      taskProvider.addTask(_title, _category);
+                      taskProvider.addTask(
+                        _titleController.text,
+                        _categoryController.text,
+                      );
                     }
                   }
                 },
