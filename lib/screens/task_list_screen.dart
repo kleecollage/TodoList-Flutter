@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/providers/task_provider.dart';
+import 'package:todo_list/screens/task_form_screen.dart';
 import 'package:todo_list/widgets/task_item.dart';
 
 class TaskListScreen extends StatelessWidget {
@@ -16,12 +17,23 @@ class TaskListScreen extends StatelessWidget {
         itemCount: taskProvider.tasks.length,
         itemBuilder: (context, index) {
           final task = taskProvider.tasks[index];
-          return TaskItem(task: task);
+          return GestureDetector(
+            onTap: (() {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TaskFormScreen()),
+              );
+            }),
+            child: TaskItem(task: task),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Todo
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskFormScreen()),
+          );
         },
         child: const Icon(Icons.add),
       ),

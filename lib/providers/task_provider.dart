@@ -20,6 +20,21 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void editTask(String id, String newTitle, String newCategory) {
+    final taskIndex = _tasks.indexWhere((task) => task.id == id);
+    final updatedTask = Task(
+      id: id,
+      title : newTitle,
+      category : newCategory,
+      isCompleted: _tasks[taskIndex].isCompleted
+    );
+
+    if (taskIndex != -1) {
+      _tasks[taskIndex] = updatedTask;
+      notifyListeners();
+    }
+  }
+
   void toggleTaskStatus(String id) {
     final taskIndex = _tasks.indexWhere((task) => task.id == id);
     if (taskIndex != -1) {
