@@ -19,7 +19,14 @@ class FilterButton extends StatelessWidget {
         backgroundColor: isSelected ? Colors.blue : Colors.blueGrey
       ),
       onPressed: onPressed,
-      child: Text(label)
+      child: Text(
+        label,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 15,
+          fontWeight: FontWeight.bold
+        ),
+      )
     );
   }
 }

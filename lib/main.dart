@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/providers/task_provider.dart';
+import 'package:todo_list/screens/task_form_screen.dart';
 import 'package:todo_list/screens/task_list_screen.dart';
 
 void main() => runApp(
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: TaskListScreen()
+      routes: {
+        '/': (context) => const TaskListScreen(),
+        '/add-task': (context) => const TaskFormScreen(),
+      }
     );
   }
 }

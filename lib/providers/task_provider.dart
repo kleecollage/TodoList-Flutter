@@ -23,6 +23,12 @@ class TaskProvider extends ChangeNotifier {
 
   TaskFilter get filter => _filter;
 
+  // setters
+  void setFilter(TaskFilter filter) {
+    _filter = filter;
+    notifyListeners();
+  }
+
   // methods
   void addTask(String title, String category) {
     final newTask = Task(
@@ -56,10 +62,5 @@ class TaskProvider extends ChangeNotifier {
       _tasks[taskIndex].isCompleted = !_tasks[taskIndex].isCompleted;
       notifyListeners();
     }
-  }
-
-  void setFilter(TaskFilter filter) {
-    _filter = filter;
-    notifyListeners();
   }
 }

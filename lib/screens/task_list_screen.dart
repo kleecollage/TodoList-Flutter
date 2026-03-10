@@ -24,11 +24,13 @@ class TaskListScreen extends StatelessWidget {
                   isSelected: taskProvider.filter == TaskFilter.all,
                   onPressed: () => taskProvider.setFilter(TaskFilter.all),
                 ),
+                SizedBox(width: 10),
                 FilterButton(
                   label: 'Completed',
                   isSelected: taskProvider.filter == TaskFilter.completed,
                   onPressed: () => taskProvider.setFilter(TaskFilter.completed),
                 ),
+                SizedBox(width: 10),
                 FilterButton(
                   label: 'Pending',
                   isSelected: taskProvider.filter == TaskFilter.pending,
@@ -40,7 +42,7 @@ class TaskListScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: taskProvider.tasks.length,
-              itemBuilder: (ccontext, index) {
+              itemBuilder: (context, index) {
                 final task = taskProvider.tasks[index];
                 return TaskItem(task: task);
               },
@@ -54,33 +56,6 @@ class TaskListScreen extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
-
-      // body: ListView.builder(
-      //   itemCount: taskProvider.tasks.length,
-      //   itemBuilder: (context, index) {
-      //     final task = taskProvider.tasks[index];
-      //     return GestureDetector(
-      //       onTap: (() {
-      //         Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) => TaskFormScreen(task: task),
-      //           ),
-      //         );
-      //       }),
-      //       child: TaskItem(task: task),
-      //     );
-      //   },
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => TaskFormScreen()),
-      //     );
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
