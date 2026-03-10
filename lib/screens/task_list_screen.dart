@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/providers/task_provider.dart';
+import 'package:todo_list/screens/task_form_screen.dart';
 import 'package:todo_list/widgets/elevation_button.dart';
 import 'package:todo_list/widgets/task_item.dart';
 
@@ -18,6 +19,7 @@ class TaskListScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              // ##########   FILTER BUTTONS   ########## //
               children: [
                 FilterButton(
                   label: 'All',
@@ -39,6 +41,7 @@ class TaskListScreen extends StatelessWidget {
               ],
             ),
           ),
+          // ##########   TASK LIST   ########## //
           Expanded(
             child: ListView.builder(
               itemCount: taskProvider.tasks.length,
@@ -50,11 +53,37 @@ class TaskListScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.pushNamed(context, '/add-task');
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const TaskFormScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    const beging = Offset(0.0, 1.0);
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+                    var tween = Tween(
+                      begin: beging,
+                      end: end,
+                    ).chain(CurveTween(curve: curve));
+                    var offSetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                      position: offSetAnimation,
+                      child: TaskFormScreen(),
+                    );
+                  },
+            ),
+          );
         },
-        child: const Icon(Icons.add),
+        label: const Text(
+          'Add Task',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
       ),
     );
   }

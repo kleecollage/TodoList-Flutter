@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_list/providers/task_provider.dart';
 import 'package:todo_list/screens/task_form_screen.dart';
 import 'package:todo_list/screens/task_list_screen.dart';
+import 'package:todo_list/theme/app_theme.dart';
 
 void main() => runApp(
   MultiProvider(
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
       title: 'Material App',
       routes: {
         '/': (context) => const TaskListScreen(),
